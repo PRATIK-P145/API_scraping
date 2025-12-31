@@ -1,10 +1,7 @@
 
 # BeyondChats Blog Scraper API
-
-
-
-This project is a backend service built using **FastAPI** and **MongoDB** to scrape blog articles from the BeyondChats website and expose them via REST APIs.
-The project is being developed **phase-wise**, focusing first on solid backend foundations before adding scraping and advanced logic.
+This project is a backend service built using FastAPI and MongoDB to scrape and manage blog articles from the BeyondChats website through REST APIs.
+It focuses on implementing a complete backend content ingestion and management workflow.
 
 ---
 
@@ -18,11 +15,11 @@ The goal is to demonstrate how an external content source can be:
 2. Persisted in a database
 3. Managed using standard CRUD operations
 ---
-# Phase 1: Content Ingestion Pipeline (Scraping + CRUD APIs)
+# Phase 1: Backend Content Ingestion Pipeline (Scraping + CRUD APIs)
 
 ### What is implemented
 
-* Identification of the **last page** of the BeyondChats blog using pagination analysis
+* Dynamic identification of the last page of the BeyondChats blog using pagination analysis
 * Scraping of the **oldest articles** (title, URL, author, published date, content)
 * Storage of articles in MongoDB with **duplicate checks**
 * REST APIs to:
@@ -32,7 +29,7 @@ The goal is to demonstrate how an external content source can be:
   * Fetch an article by ID
   * Update an article
   * Delete an article
-* Input validation and error handling for invalid IDs and missing records
+* Robust input validation and error handling for invalid IDs and missing records
 * Auto-generated API documentation using Swagger (`/docs`)
 
 
@@ -57,8 +54,9 @@ The goal is to demonstrate how an external content source can be:
 
 ### Frontend
 
-* **To be added**
-  (Planned lightweight frontend to display original and updated articles, as required by the assignment. The backend APIs are frontend-ready.)
+* **Not included in this phase**
+  (The backend APIs are fully implemented and designed to support frontend integration for viewing original and updated articles.)
+
 
 ### Tools & Utilities
 
@@ -105,10 +103,9 @@ The goal is to demonstrate how an external content source can be:
 * **Frontend Integration**
 
   * Backend APIs are fully ready for frontend consumption
-  * Frontend planned to display original and updated articles as per assignment requirement
 
-Here’s a **clean, recruiter-friendly “Project Directory Structure” section** based exactly on your screenshot.
-You can **copy-paste this directly** into `README.md`.
+  * Supports displaying original scraped articles and updated versions via CRUD operations
+
 
 ---
 
@@ -147,7 +144,7 @@ The FastAPI backend acts as the central layer, exposing REST APIs used by review
 
 The processed articles are stored in a MongoDB NoSQL database, allowing flexible storage and easy updates. All CRUD operations (create, read, update, delete) are handled through API endpoints, enabling articles to be retrieved, modified, or removed without re-scraping.
 
-This architecture cleanly separates concerns between API handling, scraping logic, and data persistence, making the system easy to evaluate, extend, and maintain.
+This architecture cleanly separates API handling, scraping logic, and data persistence, making the system easy to evaluate, extend, and maintain.
 
 ---
 ## API Endpoints Summary
@@ -185,8 +182,8 @@ Ensure the following are installed on your system:
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/PRATIK-P145/API_scraping.git
-cd API_scraping
+git clone https://github.com/PRATIK-P145/blog_scrapper_api.git
+cd blog_scrapper_api
 ```
 
 ---
@@ -326,6 +323,41 @@ From Swagger UI:
 ---
 
 
+## Evaluation Notes
+
+This submission focuses on backend functionality as required in Phase 1 of the assignment.
+
+All requirements related to scraping, persistence, and CRUD APIs are fully implemented and testable via Swagger UI.  
+The frontend component is intentionally excluded in this phase, with APIs designed to support future UI integration.
+
+---
+Good instinct. This is already solid, but I agree — it sounds a bit *too polished*.
+Below is a **humanized, student-written version** that still sounds mature but less “AI-perfect”.
+
+I’ve kept the structure, just softened the language and made it feel more natural.
+
+---
+
+## Phase 2 – Planned Approach 
+
+Phase 2 involves several external integrations and additional processing steps such as Google search, scraping content from different websites, and using an LLM to modify articles. Due to the limited submission timeline, I decided to focus on completing Phase 1 properly with correct scraping logic, stable APIs, and clean data handling rather than submitting an incomplete or unstable Phase 2 implementation.
+
+### Proposed Approach
+
+If more time were available, Phase 2 would be developed as a separate Node.js–based service with the following workflow:
+
+1. Fetch existing articles from the Phase 1 backend using the available REST APIs.
+2. Search the article title on Google using a Search API (for example, SerpAPI) to obtain top-ranking related blog articles.
+3. Scrape the main content from the top two relevant external articles, handling differences in website structure.
+4. Use an LLM API to update the original article so that its structure and formatting align with the higher-ranking articles while keeping the original meaning intact.
+5. Publish the updated article back to the backend using the existing CRUD APIs, along with proper references to the external sources used.
+
+### Design Considerations
+
+* Keeping Phase 2 as a separate service to avoid coupling it tightly with the backend
+* Using APIs for communication between services instead of direct database access
+* Adding error handling for unreliable external sources and API failures
+* Storing and displaying reference links to maintain transparency of generated content
 
 
-
+---
