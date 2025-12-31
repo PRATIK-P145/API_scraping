@@ -40,3 +40,10 @@ def create_article(article: ArticleCreate):
         "message": "Article created successfully",
         "id": str(result.inserted_id)
     }
+
+from app.scraper import test_fetch_blogs_page
+from app.scraper import get_last_page_number
+
+test_fetch_blogs_page()
+
+get_last_page_number()
