@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 from datetime import datetime
-from database import db
+from app.database import db
 
 
 BLOGS_URL = "https://beyondchats.com/blogs/"
