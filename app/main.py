@@ -43,14 +43,6 @@ def create_article(article: ArticleCreate):
         "id": str(result.inserted_id)
     }
 
-# @app.post("/scrape/oldest")
-# def scrape_oldest_articles():
-#     count = extract_and_store_oldest_articles()
-#     return {
-#         "message": "Scraping completed",
-#         "inserted_articles": count
-#     }
-
 
 @app.post("/scrape/oldest")
 def scrape_oldest_articles():
