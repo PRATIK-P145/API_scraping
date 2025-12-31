@@ -68,12 +68,7 @@ def extract_article_data(article_url):
 
     title = soup.find("h1").get_text(strip=True)
 
-    author_tag = soup.select_one(".ct-meta-element-author span")
-    author = author_tag.get_text(strip=True) if author_tag else None
-
-    date_tag = soup.find("time")
-    published_date = date_tag.get("datetime") if date_tag else None
-
+    author, published_date = extract_author_and_date(soup)
 
     content_div = soup.select_one(".elementor-widget-theme-post-content")
     paragraphs = content_div.find_all("p") if content_div else []
@@ -89,6 +84,24 @@ def extract_article_data(article_url):
         "status": "original",
         "created_at": datetime.utcnow()
     }
+
+def extract_author_and_date(soup):
+    author = None
+    published_date = None
+
+    author_tag = soup.find(
+        "span",
+        class_="elementor-post-info__item--type-author"
+    )
+    if author_tag:
+        author = author_tag.get_text(strip=True)
+
+    time_tag = soup.find("time")
+    if time_tag:
+        published_date = time_tag.get_text(strip=True)
+
+    return author, published_date
+
 
 
 def store_article_if_not_exists(article_data):

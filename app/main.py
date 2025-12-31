@@ -60,26 +60,40 @@ def scrape_oldest_articles():
         "inserted_articles": inserted
     }
 
+@app.put("/articles/{article_id}")
+def update_article(article_id: str, article: ArticleCreate):
+    try:
+        object_id = ObjectId(article_id)
+    except InvalidId:
+        raise HTTPException(status_code=400, detail="Invalid article ID format")
 
+    result = db.articles.update_one(
+        {"_id": object_id},
+        {"$set": article.dict()}
+    )
 
-# from app.scraper import test_fetch_blogs_page
-# from app.scraper import get_last_page_url
-# from app.scraper import fetch_last_page_articles
-# from app.scraper import extract_article_content
+    if result.matched_count == 0:
+        raise HTTPException(status_code=404, detail="Article not found")
 
-# extract_article_content(
-#     "https://beyondchats.com/blogs/introduction-to-chatbots/"
-# )
+    return {
+        "message": "Article updated successfully"
+    }
 
-# get_last_page_url()
+@app.delete("/articles/{article_id}")
+def delete_article(article_id: str):
+    try:
+        object_id = ObjectId(article_id)
+    except InvalidId:
+        raise HTTPException(status_code=400, detail="Invalid article ID format")
 
-# test_fetch_blogs_page()
+    result = db.articles.delete_one({"_id": object_id})
 
-# fetch_last_page_articles()
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Article not found")
 
-# from app.scraper import extract_and_print_oldest_articles
-
-# extract_and_print_oldest_articles()
+    return {
+        "message": "Article deleted successfully"
+    }
 
 
 
