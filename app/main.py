@@ -42,8 +42,13 @@ def create_article(article: ArticleCreate):
     }
 
 from app.scraper import test_fetch_blogs_page
-from app.scraper import get_last_page_number
+from app.scraper import get_last_page_url
+from app.scraper import fetch_last_page_articles
+
+get_last_page_url()
 
 test_fetch_blogs_page()
 
-get_last_page_number()
+fetch_last_page_articles()
+
+
