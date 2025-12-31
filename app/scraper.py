@@ -1,7 +1,27 @@
 import requests
 from bs4 import BeautifulSoup
+from datetime import datetime
+from app.database import db
+
 
 BLOGS_URL = "https://beyondchats.com/blogs/"
+
+HEADERS = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+}
+
+REQUEST_TIMEOUT = 15
+
+def fetch_page(url: str):
+    response = requests.get(
+        url,
+        headers=HEADERS,
+        timeout=REQUEST_TIMEOUT
+    )
+    response.raise_for_status()
+    return response.text
+
+
 
 def test_fetch_blogs_page():
     response = requests.get(BLOGS_URL)
@@ -62,9 +82,7 @@ def fetch_last_page_articles():
         print("Published:", published_date)
         print("------")
 
-from datetime import datetime
-import requests
-from bs4 import BeautifulSoup
+
 
 def extract_and_print_oldest_articles():
     last_page_url = get_last_page_url()
@@ -142,6 +160,61 @@ def extract_article_content(article_url: str):
     print("Content preview:")
     print(full_content[:1500])  
     return full_content
+
+
+def extract_and_store_oldest_articles():
+    last_page_url = get_last_page_url()
+
+    response = requests.get(last_page_url)
+    response.raise_for_status()
+
+    soup = BeautifulSoup(response.text, "html.parser")
+    articles = soup.find_all("article", class_="entry-card")
+
+    inserted_count = 0
+
+    for article in articles[:5]:
+        
+        title_tag = article.find("h2", class_="entry-title")
+        if not title_tag:
+            continue
+
+        link_tag = title_tag.find("a")
+        title = link_tag.get_text(strip=True)
+        url = link_tag["href"]
+
+        if db.articles.find_one({"url": url}):
+            print("Skipping duplicate:", title)
+            continue
+
+        author_tag = article.find("a", class_="ct-meta-element-author")
+        author = author_tag.get_text(strip=True) if author_tag else None
+
+        date_tag = article.find("time", class_="ct-meta-element-date")
+        published_date = date_tag["datetime"] if date_tag else None
+
+        content = extract_article_content(url)
+        if not content:
+            continue
+
+        article_doc = {
+            "title": title,
+            "url": url,
+            "author": author,
+            "content": content,
+            "published_date": published_date,
+            "source": "beyondchats",
+            "status": "original",
+            "created_at": datetime.utcnow()
+        }
+
+        db.articles.insert_one(article_doc)
+        inserted_count += 1
+
+        print("Inserted:", title)
+
+    print(f"Total articles inserted: {inserted_count}")
+    return inserted_count
 
 
 
