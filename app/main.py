@@ -44,11 +44,16 @@ def create_article(article: ArticleCreate):
 from app.scraper import test_fetch_blogs_page
 from app.scraper import get_last_page_url
 from app.scraper import fetch_last_page_articles
+from app.scraper import extract_article_content
 
-get_last_page_url()
+extract_article_content(
+    "https://beyondchats.com/blogs/introduction-to-chatbots/"
+)
 
-test_fetch_blogs_page()
+# get_last_page_url()
 
-fetch_last_page_articles()
+# test_fetch_blogs_page()
+
+# fetch_last_page_articles()
 
 

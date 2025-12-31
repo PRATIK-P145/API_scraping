@@ -63,3 +63,35 @@ def fetch_last_page_articles():
         print("------")
 
 
+def extract_article_content(article_url: str):
+    response = requests.get(article_url)
+    response.raise_for_status()
+
+    soup = BeautifulSoup(response.text, "html.parser")
+
+    content_div = soup.find(
+        "div",
+        class_="elementor-widget-theme-post-content"
+    )
+
+    if not content_div:
+        print("Content container not found")
+        return None
+
+    text_blocks = content_div.find_all(["p", "h2", "h3"])
+
+    content = []
+    for block in text_blocks:
+        text = block.get_text(strip=True)
+        if text:
+            content.append(text)
+
+    full_content = "\n\n".join(content)
+
+    print("Content preview:")
+    print(full_content[:1500])  # preview only
+
+    return full_content
+
+
+
