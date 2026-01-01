@@ -1,12 +1,24 @@
-from pydantic import BaseModel, Field
-from typing import Optional, List
-from datetime import datetime
+import os
+from pymongo import MongoClient
+from dotenv import load_dotenv
 
-class ArticleCreate(BaseModel):
-    title: str
-    url: str
-    content: str
-    published_date: Optional[datetime] = None
-    source: str = "beyondchats"
-    status: str = "original"
-    references: List[str] = Field(default_factory=list)
+load_dotenv()
+
+MONGO_URI = os.getenv("MONGO_URI")
+
+if not MONGO_URI:
+    raise RuntimeError("MONGO_URI environment variable not set")
+
+client = MongoClient(
+    MONGO_URI,
+    serverSelectionTimeoutMS=5000  # 5 sec timeout
+)
+
+try:
+    client.admin.command("ping")
+    print("MongoDB connected successfully")
+except Exception as e:
+    raise RuntimeError(f"MongoDB connection failed: {e}")
+
+db = client["beyondchats"]
+articles_collection = db["articles"]

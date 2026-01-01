@@ -9,6 +9,8 @@ from app.scraper import extract_and_store_oldest_articles
 
 app = FastAPI()
 
+
+
 @app.get("/articles")
 def get_articles():
     articles = []
