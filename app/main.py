@@ -9,7 +9,9 @@ from app.scraper import extract_and_store_oldest_articles
 
 app = FastAPI()
 
-
+@app.get("/health")
+def health_check():
+    return {"status": "ok"}
 
 @app.get("/articles")
 def get_articles():
