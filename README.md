@@ -15,10 +15,6 @@ The goal is to demonstrate how an external content source can be:
 2. Persisted in a database
 3. Managed using standard CRUD operations
 ---
-Here’s a **clean, professional README section** you can drop in directly.
-No fluff. No cringe. Looks like a real backend project.
-
----
 
 ## Live Deployment
 
@@ -48,7 +44,6 @@ Use this interface to explore available endpoints and test API requests directly
 * Environment variables and database credentials are securely managed via the deployment platform.
 
 ---
-
 
 # Phase 1: Backend Content Ingestion Pipeline (Scraping + CRUD APIs)
 
