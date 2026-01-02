@@ -86,7 +86,7 @@ export const api = {
     const response = await fetch(`${API_BASE_URL}/scrape/oldest`, {
       method: 'POST',
       body: JSON.stringify({
-        status:  'Extracted',
+        status:  'extracted',
       }),
     });
     return handleResponse<{ message: string; articles_count?: number }>(response);

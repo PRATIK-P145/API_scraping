@@ -151,10 +151,10 @@ export default function Home() {
   };
 
   const scrapedArticles = articles.filter(
-    (a) => a.source_type === 'scraped' || a.status === 'Extracted'
+    (a) =>  a.status === 'extracted'
   );
   const manualArticles = articles.filter(
-    (a) => a.source_type === 'manual' || a.status === 'original'
+    (a) => a.status === 'original'
   );
 
   return (
