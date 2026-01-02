@@ -15,6 +15,41 @@ The goal is to demonstrate how an external content source can be:
 2. Persisted in a database
 3. Managed using standard CRUD operations
 ---
+Here’s a **clean, professional README section** you can drop in directly.
+No fluff. No cringe. Looks like a real backend project.
+
+---
+
+## Live Deployment
+
+The backend service is live and deployed on **Render**.
+
+**Base URL:**
+
+```
+https://webextract.onrender.com/
+```
+
+### API Documentation (Swagger UI)
+
+Interactive API documentation is available at:
+
+```
+/docs
+```
+
+Use this interface to explore available endpoints and test API requests directly from the browser.
+
+
+### Usage Notes
+
+* This deployment exposes **backend APIs only** (no frontend).
+* All requests and responses follow RESTful principles.
+* Environment variables and database credentials are securely managed via the deployment platform.
+
+---
+
+
 # Phase 1: Backend Content Ingestion Pipeline (Scraping + CRUD APIs)
 
 ### What is implemented

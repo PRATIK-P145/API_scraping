@@ -4,10 +4,23 @@ from app.models import ArticleCreate
 from bson import ObjectId
 from bson.errors import InvalidId
 from fastapi import HTTPException
+from app.scraper import extract_and_store_oldest_articles4
+from fastapi.middleware.cors import CORSMiddleware
 
-from app.scraper import extract_and_store_oldest_articles
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:8080",   # React dev server
+        "http://127.0.0.1:8080",
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 @app.get("/")
 def root():
