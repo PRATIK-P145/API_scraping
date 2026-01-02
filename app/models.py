@@ -8,6 +8,6 @@ class ArticleCreate(BaseModel):
     content: str
     published_date: Optional[datetime] = None
     source: str = "beyondchats"
-    status: str = "original"
+    status: str = "Extracted"
     references: List[str] = []
 
