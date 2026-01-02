@@ -81,7 +81,7 @@ def extract_article_data(article_url):
         "content": content,
         "published_date": published_date,
         "source": "beyondchats",
-        "status": "original",
+        "status": "Extracted",
         "created_at": datetime.utcnow()
     }
 
