@@ -73,12 +73,22 @@ def create_article(article: ArticleCreate):
     }
 
 
+# @app.post("/scrape/oldest")
+# def scrape_oldest_articles(payload: ScrapeRequest):
+#     inserted = extract_and_store_oldest_articles(source_type=payload.source_type)
+#     return {
+#         "message": "Scraping completed",
+#         "inserted_articles": inserted
+#     }
+
 @app.post("/scrape/oldest")
 def scrape_oldest_articles(payload: ScrapeRequest):
-    inserted = extract_and_store_oldest_articles(source_type=payload.source_type)
+    count = extract_and_store_oldest_articles(
+        source_type=payload.source_type
+    )
     return {
         "message": "Scraping completed",
-        "inserted_articles": inserted
+        "articles_count": count
     }
 
 @app.put("/articles/{article_id}")

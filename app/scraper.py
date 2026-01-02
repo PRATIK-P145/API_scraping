@@ -60,7 +60,7 @@ def collect_5_oldest_article_urls():
 
     return collected_urls
 
-def extract_article_data(article_url,source_type="extracted"):
+def extract_article_data(article_url, source_type="extracted"):
     response = requests.get(article_url, headers=HEADERS, timeout=REQUEST_TIMEOUT)
     response.raise_for_status()
 
@@ -114,13 +114,13 @@ def store_article_if_not_exists(article_data):
     return True
 
 
-def extract_and_store_oldest_articles():
+def extract_and_store_oldest_articles(source_type="extracted"):
     urls = collect_5_oldest_article_urls()
     inserted = 0
 
     for url in urls:
         try:
-            article_data = extract_article_data(url)
+            article_data = extract_article_data(url, source_type=source_type)
             if store_article_if_not_exists(article_data):
                 inserted += 1
         except Exception as e:
