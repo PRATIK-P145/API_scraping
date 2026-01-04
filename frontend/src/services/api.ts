@@ -85,10 +85,14 @@ export const api = {
   async triggerScrape(): Promise<{ message: string; articles_count?: number }> {
     const response = await fetch(`${API_BASE_URL}/scrape/oldest`, {
       method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify({
-        status:  'extracted',
+        status: 'extracted',
       }),
     });
+  
     return handleResponse<{ message: string; articles_count?: number }>(response);
-  },
-};
+  }
+}
